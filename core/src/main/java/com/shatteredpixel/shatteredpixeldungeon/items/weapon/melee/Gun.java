@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Invisibility;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
@@ -19,6 +20,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -27,9 +29,9 @@ public abstract class Gun extends MeleeWeapon {
     public static final String AC_SHOOT = "SHOOT";
     public static final String AC_RELOAD = "RELOAD";
 
-    private static final float TIME_TO_SHOOT = 1f;
-
-    public int maxRounds = initialRounds();
+    public float timeToShoot = 1f;
+    public float timeToReload = 1f;
+    public int maxRounds = 4;
     public int curRounds = maxRounds;
 
     protected int collisionProperties = Ballistica.MAGIC_BOLT;
@@ -55,10 +57,45 @@ public abstract class Gun extends MeleeWeapon {
                 lvl;         // level scaling
     }
 
+    public int shootMin(int lvl) {
+        return 2 * (tier + 1) +     // base
+                lvl;                // level scaling
+    }
+
+    public int shootMax(int lvl) {
+        return 3 * (tier + 1) +     // base
+                lvl * (tier + 1);   // level scaling
+    }
+
+    public int shootMin() {
+        return shootMin(buffedLvl());
+    }
+
+    public int shootMax() {
+        return shootMax(buffedLvl());
+    }
+
+    public int shootDamageRoll() {
+        return augment.damageFactor(Random.NormalIntRange(shootMin(), shootMax()));
+    }
+
+    public int shootDamageRoll(Char owner) {
+        int damage = augment.damageFactor(Random.NormalIntRange(shootMin(), shootMax()));
+
+        if (owner instanceof Hero) {
+            int exStr = ((Hero) owner).STR() - STRReq();
+            if (exStr > 0) {
+                damage += Random.IntRange(0, exStr);
+            }
+        }
+
+        return damage;
+    }
+
     @Override
     public String info() {
         String info = super.info();
-        // TODO: 장전 등 메시지 추가하여 Info Message 변경
+        info += "\n\n" + Messages.get(Gun.class, "not_enchantable");
         return info;
     }
 
@@ -69,8 +106,7 @@ public abstract class Gun extends MeleeWeapon {
 
     @Override
     public Weapon enchant(Enchantment ench) {
-        // TODO: 총기 인챈트 불가능?
-        return super.enchant(ench);
+        return this; // Not enchantable
     }
 
     @Override
@@ -81,11 +117,11 @@ public abstract class Gun extends MeleeWeapon {
         return actions;
     }
 
-    protected int initialRounds() {
-        return 1;
+    public int collisionProperties(int target) {
+        return collisionProperties;
     }
 
-    public int collisionProperties(int target) {
+    public int collisionProperties() {
         return collisionProperties;
     }
 
@@ -116,13 +152,27 @@ public abstract class Gun extends MeleeWeapon {
         if (curRounds >= 1) {
             return true;
         } else {
+            // TODO: 애니메이션 출력
             GLog.w(Messages.get(this, "fizzles"));
-            // TODO: 총알이 없다는 메시지 추가
             return false;
         }
     }
 
-    public abstract void onShoot(Ballistica attack);
+    public void onShoot(Ballistica shot) {
+
+        Char ch = Actor.findChar(shot.collisionPos);
+        if (ch != null) {
+
+            curUser.shoot(ch);
+            Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
+            // TODO: Hit Sound 변경
+
+            ch.sprite.burst(0xFFFFFFFF, buffedLvl() / 2 + 2);
+            // TODO: 스프라이트 변경
+
+        }
+
+    }
 
     public void fx(Ballistica bolt, Callback callback) {
         // TODO: 효과 추가
@@ -153,7 +203,7 @@ public abstract class Gun extends MeleeWeapon {
         Invisibility.dispel();
         updateQuickslot();
 
-        curUser.spendAndNext(TIME_TO_SHOOT);
+        curUser.spendAndNext(timeToShoot);
     }
 
     public void reload(int amount) {
@@ -174,18 +224,18 @@ public abstract class Gun extends MeleeWeapon {
             reload(maxToUse);
             bullet.quantity(bullet.quantity() - maxToUse);
             GLog.i(Messages.get(Gun.class, "reload_success", maxToUse));
-            // TODO: 재장전 성공 텍스트
+            curUser.spendAndNext(timeToReload);
         } else {
             reload(bullet.quantity());
             GLog.i(Messages.get(Gun.class, "reload_success", bullet.quantity()));
             bullet.detachAll(Dungeon.hero.belongings.backpack);
+            curUser.spendAndNext(timeToReload);
         }
 
         updateQuickslot();
         Sample.INSTANCE.play(Assets.Sounds.BURNING); // TODO: 사운드 변경
         curUser.sprite.emitter().burst(ElmoParticle.FACTORY, 12); // TODO: 재장전 이펙트
         evoke(curUser); // TODO: 재장전 이펙트
-        GLog.p(Messages.get(Gun.class, "reload", bullet.name()));
     }
 
     protected static CellSelector.Listener shooter = new CellSelector.Listener() {

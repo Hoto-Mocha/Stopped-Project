@@ -427,6 +427,141 @@ public abstract class Char extends Actor {
 		}
 	}
 
+	final public boolean shootAttack( Char enemy ){
+		return shootAttack(enemy, 1f, 0f, 1f);
+	}
+
+	public boolean shootAttack( Char enemy, float dmgMulti, float dmgBonus, float accMulti ) {
+
+		if (enemy == null) return false;
+
+		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
+
+		if (enemy.isInvulnerable(getClass())) {
+
+			if (visibleFight) {
+				enemy.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "invulnerable") );
+
+				Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1f, Random.Float(0.96f, 1.05f));
+			}
+
+			return false;
+
+		} else if (hit( this, enemy, accMulti )) {
+
+			int dr = enemy.drRoll();
+
+			Barkskin bark = enemy.buff(Barkskin.class);
+			if (bark != null)   dr += Random.NormalIntRange( 0 , bark.level() );
+
+			Blocking.BlockBuff block = enemy.buff(Blocking.BlockBuff.class);
+			if (block != null)  dr += block.blockingRoll();
+
+			int dmg;
+			Preparation prep = buff(Preparation.class);
+			if (prep != null){
+				dmg = prep.shootDamageRoll(this);
+				if (this == Dungeon.hero && Dungeon.hero.hasTalent(Talent.BOUNTY_HUNTER)) {
+					Buff.affect(Dungeon.hero, Talent.BountyHunterTracker.class, 0.0f);
+				}
+			} else {
+				dmg = shootDamageRoll();
+			}
+
+			dmg = Math.round(dmg*dmgMulti);
+
+			Berserk berserk = buff(Berserk.class);
+			if (berserk != null) dmg = berserk.damageFactor(dmg);
+
+			if (buff( Fury.class ) != null) {
+				dmg *= 1.5f;
+			}
+
+			dmg += dmgBonus;
+
+			//friendly endure
+			Endure.EndureTracker endure = buff(Endure.EndureTracker.class);
+			if (endure != null) dmg = endure.damageFactor(dmg);
+
+			//enemy endure
+			endure = enemy.buff(Endure.EndureTracker.class);
+			if (endure != null){
+				dmg = endure.adjustDamageTaken(dmg);
+			}
+
+			int effectiveDamage = enemy.defenseProc( this, dmg );
+			effectiveDamage = Math.max( effectiveDamage - dr, 0 );
+
+			if ( enemy.buff( Vulnerable.class ) != null){
+				effectiveDamage *= 1.33f;
+			}
+
+			effectiveDamage = attackProc( enemy, effectiveDamage );
+
+			if (visibleFight) {
+				if (effectiveDamage > 0 || !enemy.blockSound(Random.Float(0.96f, 1.05f))) {
+					hitSound(Random.Float(0.87f, 1.15f));
+				}
+			}
+
+			// If the enemy is already dead, interrupt the attack.
+			// This matters as defence procs can sometimes inflict self-damage, such as armor glyphs.
+			if (!enemy.isAlive()){
+				return true;
+			}
+
+			enemy.damage( effectiveDamage, this );
+
+			if (buff(FireImbue.class) != null)  buff(FireImbue.class).proc(enemy);
+			if (buff(FrostImbue.class) != null) buff(FrostImbue.class).proc(enemy);
+
+			if (enemy.isAlive() && prep != null && prep.canKO(enemy)){
+				enemy.HP = 0;
+				if (!enemy.isAlive()) {
+					enemy.die(this);
+				} else {
+					//helps with triggering any on-damage effects that need to activate
+					enemy.damage(-1, this);
+					DeathMark.processFearTheReaper(enemy);
+				}
+				enemy.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Preparation.class, "assassinated"));
+			}
+
+			enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
+			enemy.sprite.flash();
+
+			if (!enemy.isAlive() && visibleFight) {
+				if (enemy == Dungeon.hero) {
+
+					if (this == Dungeon.hero) {
+						return true;
+					}
+
+					Dungeon.fail( getClass() );
+					GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );
+
+				} else if (this == Dungeon.hero) {
+					GLog.i( Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name())) );
+				}
+			}
+
+			return true;
+
+		} else {
+
+			if (visibleFight) {
+				String defense = enemy.defenseVerb();
+				enemy.sprite.showStatus( CharSprite.NEUTRAL, defense );
+
+				//TODO enemy.defenseSound? currently miss plays for monks/crab even when they parry
+				Sample.INSTANCE.play(Assets.Sounds.MISS);
+			}
+
+			return false;
+
+		}
+	}
+
 	public static int INFINITE_ACCURACY = 1_000_000;
 	public static int INFINITE_EVASION = 1_000_000;
 
@@ -482,7 +617,11 @@ public abstract class Char extends Actor {
 	public int damageRoll() {
 		return 1;
 	}
-	
+
+	public int shootDamageRoll() {
+		return 1;
+	}
+
 	//TODO it would be nice to have a pre-armor and post-armor proc.
 	// atm attack is always post-armor and defence is already pre-armor
 	
