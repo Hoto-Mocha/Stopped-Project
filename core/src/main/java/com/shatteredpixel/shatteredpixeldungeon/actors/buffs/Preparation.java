@@ -111,7 +111,16 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 			}
 			return Math.round(dmg * (1f + baseDmgBonus));
 		}
-		
+
+		public int shootDamageRoll( Char attacker ){
+			int dmg = attacker.shootDamageRoll();
+			for( int i = 1; i < damageRolls; i++){
+				int newDmg = attacker.shootDamageRoll();
+				if (newDmg > dmg) dmg = newDmg;
+			}
+			return Math.round(dmg * (1f + baseDmgBonus));
+		}
+
 		public static AttackLevel getLvl(int turnsInvis){
 			List<AttackLevel> values = Arrays.asList(values());
 			Collections.reverse(values);
@@ -152,6 +161,10 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	
 	public int damageRoll( Char attacker ){
 		return AttackLevel.getLvl(turnsInvis).damageRoll(attacker);
+	}
+
+	public int shootDamageRoll( Char attacker ){
+		return AttackLevel.getLvl(turnsInvis).shootDamageRoll(attacker);
 	}
 
 	public boolean canKO( Char defender ){
