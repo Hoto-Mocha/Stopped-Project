@@ -4,6 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
@@ -12,6 +13,7 @@ public class ShotGun extends Gun {
     private final static int MAX_DIST = 4;  // 최대 사거리
 
     {
+        image = ItemSpriteSheet.SHOTGUN;
         maxRounds = 2;
         timeToReload = 2f;
 

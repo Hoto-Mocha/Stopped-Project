@@ -4,8 +4,7 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class Bullet extends Item {
     {
-        image = ItemSpriteSheet.DEWDROP; // TODO: 이미지 변경
-        stackable = true;
+        image = ItemSpriteSheet.BULLET;
         bones = true;
     }
 

@@ -2,16 +2,18 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-public class CrudePistol extends Gun {
-
+public class Revolver extends Gun{
     {
-        image = ItemSpriteSheet.CRUDEPISTOL;
+
+        image = ItemSpriteSheet.REVOLVER;
+        maxRounds = 6;
+        tier = 2;
 
         // hitSound = ?
         // hitSoundPitch = ?
 
-        tier = 1;
-        bones = false; // 기본 무기는 영웅의 유해에 포함되지 않음
+
+        ACC = 1.3f; //130% accuracy
 
     }
 
