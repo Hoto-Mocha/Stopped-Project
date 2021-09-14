@@ -138,6 +138,14 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WarHammer;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Whip;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.CrudePistol;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Handgun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Revolver;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.HuntingRifle;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ShotGun;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.SniperRifle;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MachineGun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Bolas;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.ForceCube;
@@ -183,6 +191,13 @@ public class Generator {
 		WEP_T3	( 0,    MeleeWeapon.class),
 		WEP_T4	( 0,    MeleeWeapon.class),
 		WEP_T5	( 0,    MeleeWeapon.class),
+
+		GUN     (4,   Gun.class),
+		GUN_T1  (0,   Gun.class),
+		GUN_T2  (0,   Gun.class),
+		GUN_T3  (0,   Gun.class),
+		GUN_T4  (0,   Gun.class),
+		GUN_T5  (0,   Gun.class),
 		
 		ARMOR	( 3,    Armor.class ),
 		
@@ -372,7 +387,38 @@ public class Generator {
 					Gauntlet.class
 			};
 			WEP_T5.probs = new float[]{ 6, 5, 5, 4, 4, 4 };
-			
+
+			//see generator.randomGun
+			GUN.classes = new Class<?>[]{};
+			GUN.probs = new float[]{};
+
+			GUN_T1.classes = new Class<?>[]{
+					CrudePistol.class
+			};
+			GUN_T1.probs = new float[]{ 0 };
+
+			GUN_T2.classes = new Class<?>[]{
+					Handgun.class,
+					Revolver.class
+			};
+			GUN_T2.probs = new float[]{ 6, 5 };
+
+			GUN_T3.classes = new Class<?>[]{
+					HuntingRifle.class,
+					ShotGun.class
+			};
+			GUN_T3.probs = new float[]{ 6, 5 };
+
+			GUN_T4.classes = new Class<?>[]{
+					SniperRifle.class
+			};
+			GUN_T4.probs = new float[]{ 6 };
+
+			GUN_T5.classes = new Class<?>[]{
+					MachineGun.class
+			};
+			GUN_T5.probs = new float[]{ 6 };
+
 			//see Generator.randomArmor
 			ARMOR.classes = new Class<?>[]{
 					ClothArmor.class,
@@ -503,6 +549,8 @@ public class Generator {
 				return randomArmor();
 			case WEAPON:
 				return randomWeapon();
+			case GUN:
+				return randomGun();
 			case MISSILE:
 				return randomMissile();
 			case ARTIFACT:
@@ -563,6 +611,28 @@ public class Generator {
 		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
 		
 		Category c = wepTiers[Random.chances(floorSetTierProbs[floorSet])];
+		MeleeWeapon w = (MeleeWeapon)Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+		w.random();
+		return w;
+	}
+
+	public static final Category[] gunTiers = new Category[]{
+			Category.GUN_T1,
+			Category.GUN_T2,
+			Category.GUN_T3,
+			Category.GUN_T4,
+			Category.GUN_T5
+	};
+
+	public static MeleeWeapon randomGun(){
+		return randomGun(Dungeon.depth / 5);
+	}
+
+	public static MeleeWeapon randomGun(int floorSet) {
+
+		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
+
+		Category c = gunTiers[Random.chances(floorSetTierProbs[floorSet])];
 		MeleeWeapon w = (MeleeWeapon)Reflection.newInstance(c.classes[Random.chances(c.probs)]);
 		w.random();
 		return w;

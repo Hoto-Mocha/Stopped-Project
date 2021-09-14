@@ -8,15 +8,15 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
-public class HuntingRifle extends Gun {
+public class SniperRifle extends Gun {
 
     {
-        image = ItemSpriteSheet.HUNTINGRIFLE;
+        image = ItemSpriteSheet.SNIPERRIFLE;
 
-        maxRounds = 5;
+        maxRounds = 3;
         timeToReload = 2f;
 
-        tier = 3;
+        tier = 4;
         bones = true;
     }
 
@@ -26,7 +26,7 @@ public class HuntingRifle extends Gun {
         Char ch = Actor.findChar(shot.collisionPos);
         if (ch != null) {
 
-            float dmgBonus = (float) Math.min(Random.Int(shot.dist), 10 + buffedLvl());
+            float dmgBonus = (float) Math.min(Random.Int(shot.dist), 5 + buffedLvl());
             curUser.shoot(ch, 1f, dmgBonus, 1.2f);
             Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
             // TODO: Hit Sound 변경

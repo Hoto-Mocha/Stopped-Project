@@ -22,6 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.RipperDemon;
 import com.watabou.noosa.TextureFilm;
 
 public class ItemSpriteSheet {
@@ -689,7 +690,77 @@ public class ItemSpriteSheet {
 		assignItemRect(VIAL,        12, 12);
 	}
 
-	                                                                                    //16 free slots
+	private static final int ARPIXEL         =                                   xy(1, 32);  //16 slots
+	public static final int GUNSMITHINGBAG        = ARPIXEL+0;
+	public static final int BULLET           = ARPIXEL+1;
+	public static final int NORMALSHOT       = ARPIXEL+2;
+	public static final int HPSHOT           = ARPIXEL+3;
+	public static final int INCENDIARYSHOT   = ARPIXEL+4;
+	public static final int APSHOT           = ARPIXEL+5;
+	public static final int ROCKETSHOT       = ARPIXEL+6;
+	static{
+		assignItemRect(GUNSMITHINGBAG,  			 16, 16);
+		assignItemRect(BULLET,   			 14, 14);
+		assignItemRect(NORMALSHOT,           10, 10);
+		assignItemRect(HPSHOT,               10, 10);
+		assignItemRect(INCENDIARYSHOT,       10, 10);
+		assignItemRect(APSHOT,               10, 10);
+		assignItemRect(ROCKETSHOT,           10, 10);
+	}
+
+	//ARrangedpixeldungeon
+
+	private static final int GUN_TIER1         =                                   xy(1, 33);  //8 slots
+	public static final int CRUDEPISTOL        = GUN_TIER1+0;
+	static{
+		assignItemRect(CRUDEPISTOL,  			 10, 13);
+		}
+
+	private static final int GUN_TIER2         =                                   xy(9, 33);  //8 slots
+	public static final int HANDGUN            = GUN_TIER2+0;
+	public static final int BLUNDERBUSS        = GUN_TIER2+1;
+	public static final int REVOLVER           = GUN_TIER2+2;
+	static{
+		assignItemRect(HANDGUN,  			 13, 16);
+		assignItemRect(BLUNDERBUSS,  		 13, 15);
+		assignItemRect(REVOLVER,  			 11, 15);
+	}
+
+	private static final int GUN_TIER3         =                                   xy(1, 34);  //8 slots
+	public static final int HUNTINGRIFLE       = GUN_TIER3+0;
+	public static final int SHOTGUN      	   = GUN_TIER3+1;
+	public static final int DUALPISTOL         = GUN_TIER3+2;
+	public static final int HARPOON            = GUN_TIER3+3;
+	static{
+		assignItemRect(HUNTINGRIFLE,  		 13, 16);
+		assignItemRect(SHOTGUN,  			 14, 16);
+		assignItemRect(DUALPISTOL,  		 15, 16);
+		assignItemRect(HARPOON,  			 14, 16);
+	}
+
+	private static final int GUN_TIER4         =                                   xy(9, 34);  //8 slots
+	public static final int SNIPERRIFLE        = GUN_TIER4+0;
+	public static final int ASSULTRIFLE 	   = GUN_TIER4+1;
+	public static final int SUBMACHINEGUN      = GUN_TIER4+2;
+	static{
+		assignItemRect(SNIPERRIFLE,  		 14, 16);
+		assignItemRect(ASSULTRIFLE,			 15, 16);
+		assignItemRect(SUBMACHINEGUN, 		 15, 16);
+	}
+
+	private static final int GUN_TIER5         =                                   xy(1, 35);  //8 slots
+	public static final int MACHINEGUN         = GUN_TIER5+0;
+	public static final int FLAMETHROWER 	   = GUN_TIER5+1;
+	public static final int PLASMACANNON       = GUN_TIER5+2;
+	public static final int ROCKETLAUNCHER     = GUN_TIER5+3;
+	static{
+		assignItemRect(MACHINEGUN,  		 13, 15);
+		assignItemRect(FLAMETHROWER,  		 14, 15);
+		assignItemRect(PLASMACANNON,  		 14, 16);
+		assignItemRect(ROCKETLAUNCHER,       15, 15);
+	}
+
+
 
 	//for smaller 8x8 icons that often accompany an item sprite
 	public static class Icons {

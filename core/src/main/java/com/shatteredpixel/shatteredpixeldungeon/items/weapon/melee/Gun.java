@@ -58,12 +58,12 @@ public abstract class Gun extends MeleeWeapon {
     }
 
     public int shootMin(int lvl) {
-        return 2 * (tier + 1) +     // base
+        return 1 * (tier + 1) +     // base
                 lvl;                // level scaling
     }
 
     public int shootMax(int lvl) {
-        return 3 * (tier + 1) +     // base
+        return 4 * (tier + 1) +     // base
                 lvl * (tier + 1);   // level scaling
     }
 
@@ -97,6 +97,10 @@ public abstract class Gun extends MeleeWeapon {
         String info = super.info();
         info += "\n\n" + Messages.get(Gun.class, "not_enchantable");
         return info;
+    }
+
+    public String statsInfo(){
+        return Messages.get(this, "stats");
     }
 
     @Override
@@ -218,13 +222,15 @@ public abstract class Gun extends MeleeWeapon {
 
         if (maxToUse == 0) {
             GLog.w(Messages.get(Gun.class, "already_full_loaded"));
-            // TODO: 재장전 실패 텍스트
             return;
         } else if (maxToUse < bullet.quantity()) {
             reload(maxToUse);
             bullet.quantity(bullet.quantity() - maxToUse);
             GLog.i(Messages.get(Gun.class, "reload_success", maxToUse));
             curUser.spendAndNext(timeToReload);
+        } else if (bullet.quantity() == 0) {
+            GLog.w(Messages.get(Gun.class, "reload_fail"));
+            return;
         } else {
             reload(bullet.quantity());
             GLog.i(Messages.get(Gun.class, "reload_success", bullet.quantity()));
