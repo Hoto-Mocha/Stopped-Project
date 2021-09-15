@@ -18,22 +18,22 @@ public class HuntingRifle extends Gun {
 
     }
 
-    //@Override
-    //public void onShoot(Ballistica shot) {
-    //
-    //    Char ch = Actor.findChar(shot.collisionPos);
-    //    if (ch != null) {
-    //
-    //        float dmgBonus = (float) Math.min(Random.Int(shot.dist), 10 + buffedLvl());
-    //        curUser.shoot(ch, 1f, dmgBonus, 1.2f);
-    //        Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
-    //        // TODO: Hit Sound 변경
-    //
-    //        ch.sprite.burst(0xFFFFFFFF, buffedLvl() / 2 + 2);
-    //        // TODO: 스프라이트 변경
-    //
-    //    }
-    //
-    //}
+    @Override
+    public void onShoot(Ballistica shot) {
+
+        Char ch = Actor.findChar(shot.collisionPos);
+        if (ch != null) {
+
+            float dmgBonus = (float) Math.min(Random.Int(shot.dist), 10 + buffedLvl());
+            curUser.shoot(ch, 1f, dmgBonus, 1.2f);
+            Sample.INSTANCE.play(Assets.Sounds.HIT_MAGIC, 1, Random.Float(0.87f, 1.15f));
+            // TODO: Hit Sound 변경
+
+            ch.sprite.burst(0xFFFFFFFF, buffedLvl() / 2 + 2);
+            // TODO: 스프라이트 변경
+
+        }
+
+    }
 
 }

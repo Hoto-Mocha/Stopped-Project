@@ -14,7 +14,6 @@ public class ShotGun extends Gun {
 
     {
         image = ItemSpriteSheet.SHOTGUN;
-        maxRounds = 2;
         timeToReload = 2f;
 
         tier = 3;
@@ -53,4 +52,8 @@ public class ShotGun extends Gun {
 
     }
 
+    @Override
+    public int initialRounds() {
+        return 2;
+    }
 }

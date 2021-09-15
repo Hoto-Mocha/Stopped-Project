@@ -7,7 +7,6 @@ public class MachineGun extends Gun {
     {
         image = ItemSpriteSheet.MACHINEGUN;
 
-        maxRounds = 40;
         timeToReload = 4;
         timeToShoot = 0.25f;
 
@@ -20,4 +19,8 @@ public class MachineGun extends Gun {
         ACC = 0.7f; //70% accuracy
     }
 
+    @Override
+    public int initialRounds() {
+        return 40;
+    }
 }

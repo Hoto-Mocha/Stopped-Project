@@ -11,9 +11,12 @@ public class CrudePistol extends Gun {
         // hitSoundPitch = ?
 
         tier = 1;
-        maxRounds = 4;
         bones = false; // 기본 무기는 영웅의 유해에 포함되지 않음
 
     }
 
+    @Override
+    public int initialRounds() {
+        return 4;
+    }
 }

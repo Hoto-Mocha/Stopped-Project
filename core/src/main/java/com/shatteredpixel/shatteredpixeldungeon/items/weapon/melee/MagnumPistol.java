@@ -8,7 +8,6 @@ public class MagnumPistol extends Gun{
         image = ItemSpriteSheet.MAGNUMPISTOL;
         tier = 5;
 
-        maxRounds = 8;
         timeToReload = 1f;
 
         // hitSound = ?
@@ -17,4 +16,8 @@ public class MagnumPistol extends Gun{
 
     }
 
+    @Override
+    public int initialRounds() {
+        return 8;
+    }
 }
