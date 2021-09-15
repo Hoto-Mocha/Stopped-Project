@@ -31,7 +31,7 @@ public abstract class Gun extends MeleeWeapon {
 
     public float timeToShoot = 1f;
     public float timeToReload = 1f;
-    public int maxRounds = 4;
+    public int maxRounds = 6;
     public int curRounds = maxRounds;
 
     protected int collisionProperties = Ballistica.MAGIC_BOLT;
@@ -47,14 +47,14 @@ public abstract class Gun extends MeleeWeapon {
 
     @Override
     public int min(int lvl) {
-        return 1 +    // base
-                lvl;  // level scaling
+        return 1 * tier +    // base
+                lvl;         // level scaling
     }
 
     @Override
     public int max(int lvl) {
-        return 2 * tier +    // base
-                lvl;         // level scaling
+        return 3 * (tier + 1) +    // base
+                lvl;               // level scaling
     }
 
     public int shootMin(int lvl) {
@@ -63,7 +63,7 @@ public abstract class Gun extends MeleeWeapon {
     }
 
     public int shootMax(int lvl) {
-        return 4 * (tier + 1) +     // base
+        return 5 * (tier + 1) +     // base
                 lvl * (tier + 1);   // level scaling
     }
 

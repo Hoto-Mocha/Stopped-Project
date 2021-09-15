@@ -10,7 +10,7 @@ public class Handgun extends Gun{
         // hitSound = ?
         // hitSoundPitch = ?
 
-        maxRounds = 6;
+        maxRounds = 12;
         timeToShoot = 0.5f;
 
         tier = 2;
@@ -23,7 +23,7 @@ public class Handgun extends Gun{
     }
 
     public int shootMax(int lvl) {
-        return 2 * (tier + 1) +     // 6 base, down from 12
+        return 4 * (tier) +     // 8 base, down from 15
                 lvl * (tier);       // +2 per lvl, down from +3
     }
 
