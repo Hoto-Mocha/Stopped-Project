@@ -18,20 +18,21 @@ public class DualPistol extends Gun{
     }
 
     public int min(int lvl) {
-        return (tier - 1) +       // 2 base, down from 4
-                lvl;              // level scaling
+        return 1 * (tier - 1) +    // base
+                lvl;               // level scaling
+    }
 
-
+    public int max(int lvl) {
+        return 3 * (tier - 1) +    // base
+                lvl * (tier - 1);  // level scaling
     }
 
     public int shootMin(int lvl) {
-        return (tier) +         // 3 base, down from 4
-                lvl;            // level scaling
+        return 2 * (tier - 1) +     // base
+                lvl;                // level scaling
     }
 
     public int shootMax(int lvl) {
-        return 4 * (tier) +         // 12 base, down from 20
-                lvl * (tier);       // +3 per lvl, down from +4
+        return 5 * (tier - 1) +     // base
+                lvl * (tier - 1);   // level scaling
     }
-
-}
