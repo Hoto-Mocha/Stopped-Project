@@ -32,7 +32,7 @@ public class WornShortsword extends MeleeWeapon {
 		hitSoundPitch = 1.1f;
 
 		tier = 1;
-		ACC = 100f;
+		ACC = 100f; // TODO: 정확성 수정
 
 		bones = false;
 	}
@@ -40,11 +40,11 @@ public class WornShortsword extends MeleeWeapon {
 	public int max(int lvl) {
 		return  800 +    //16 base, down from 20
 				lvl;   //scaling unchanged
-	}
+	} // TODO: 데미지 수정
 
 	@Override
 	public int min(int lvl) {
 		return  500 +    //16 base, down from 20
 				lvl;   //scaling unchanged
-	}
+	} // TODO: 데미지 수정
 }
