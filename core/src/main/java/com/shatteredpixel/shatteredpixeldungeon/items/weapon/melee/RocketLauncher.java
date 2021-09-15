@@ -9,7 +9,6 @@ public class RocketLauncher extends Gun{
         image = ItemSpriteSheet.ASSULTRIFLE;
         tier = 4;
 
-        maxRounds = 1;
         timeToShoot = 2f;
         timeToReload = 3f;
 
@@ -29,4 +28,8 @@ public class RocketLauncher extends Gun{
                 lvl * (tier + 1);   // level scaling
     }
 
+    @Override
+    public int initialRounds() {
+        return 1;
+    }
 }

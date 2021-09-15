@@ -8,7 +8,6 @@ public class AssultRifle extends Gun{
         image = ItemSpriteSheet.ASSULTRIFLE;
         tier = 4;
 
-        maxRounds = 12;
         timeToReload = 2f;
 
         // hitSound = ?
@@ -17,4 +16,8 @@ public class AssultRifle extends Gun{
 
     }
 
+    @Override
+    public int initialRounds() {
+        return 12;
+    }
 }

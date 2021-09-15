@@ -31,7 +31,7 @@ public abstract class Gun extends MeleeWeapon {
 
     public float timeToShoot = 1f;
     public float timeToReload = 1f;
-    public int maxRounds = 6;
+    public int maxRounds = initialRounds();
     public int curRounds = maxRounds;
 
     protected int collisionProperties = Ballistica.MAGIC_BOLT;
@@ -92,6 +92,10 @@ public abstract class Gun extends MeleeWeapon {
         return damage;
     }
 
+    public int initialRounds() {
+        return 6;
+    }
+
     @Override
     public String info() {
         String info = super.info();
@@ -99,7 +103,7 @@ public abstract class Gun extends MeleeWeapon {
         return info;
     }
 
-    public String statsInfo(){
+    public String statsInfo() {
         return Messages.get(this, "stats");
     }
 
@@ -116,7 +120,7 @@ public abstract class Gun extends MeleeWeapon {
     @Override
     public ArrayList<String> actions(Hero hero) {
         ArrayList<String> actions = super.actions(hero);
-        actions.add(AC_RELOAD);
+        if (isEquipped(hero)) actions.add(AC_RELOAD);
         actions.add(AC_SHOOT);
         return actions;
     }
@@ -141,6 +145,10 @@ public abstract class Gun extends MeleeWeapon {
             reloadBullet();
 
         } else if (action.equals(AC_SHOOT)) {
+            if (!isEquipped(hero)) {
+                GLog.i(Messages.get(Gun.class, "need_to_equip"));
+                return;
+            }
 
             if (cursed || hasCurseEnchant()) {
                 // TODO: 저주받았을 때 메커니즘 추가
@@ -223,14 +231,14 @@ public abstract class Gun extends MeleeWeapon {
         if (maxToUse == 0) {
             GLog.w(Messages.get(Gun.class, "already_full_loaded"));
             return;
+        } else if (bullet == null) {
+            GLog.w(Messages.get(Gun.class, "reload_fail"));
+            return;
         } else if (maxToUse < bullet.quantity()) {
             reload(maxToUse);
             bullet.quantity(bullet.quantity() - maxToUse);
             GLog.i(Messages.get(Gun.class, "reload_success", maxToUse));
             curUser.spendAndNext(timeToReload);
-        } else if (bullet.quantity() == 0) {
-            GLog.w(Messages.get(Gun.class, "reload_fail"));
-            return;
         } else {
             reload(bullet.quantity());
             GLog.i(Messages.get(Gun.class, "reload_success", bullet.quantity()));
@@ -263,6 +271,7 @@ public abstract class Gun extends MeleeWeapon {
 
                 if (target == curUser.pos || cell == curUser.pos) {
                     curGun.reloadBullet();
+                    return;
                 }
 
                 // curUser.sprite.zap(cell);

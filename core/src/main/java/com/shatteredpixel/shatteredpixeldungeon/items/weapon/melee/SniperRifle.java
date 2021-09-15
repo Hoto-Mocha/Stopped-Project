@@ -13,7 +13,6 @@ public class SniperRifle extends Gun {
     {
         image = ItemSpriteSheet.SNIPERRIFLE;
 
-        maxRounds = 3;
         timeToReload = 2f;
 
         tier = 4;
@@ -38,4 +37,8 @@ public class SniperRifle extends Gun {
 
     }
 
+    @Override
+    public int initialRounds() {
+        return 3;
+    }
 }

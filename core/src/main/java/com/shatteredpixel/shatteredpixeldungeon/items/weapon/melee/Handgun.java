@@ -10,21 +10,26 @@ public class Handgun extends Gun{
         // hitSound = ?
         // hitSoundPitch = ?
 
-        maxRounds = 12;
         timeToShoot = 0.5f;
 
         tier = 2;
         bones = true;
     }
 
+    @Override
     public int shootMin(int lvl) {
         return (tier) +         // 2 base, down from 3
                 lvl;            // level scaling
     }
 
+    @Override
     public int shootMax(int lvl) {
         return 4 * (tier) +     // 8 base, down from 15
                 lvl * (tier);       // +2 per lvl, down from +3
     }
 
+    @Override
+    public int initialRounds() {
+        return 12;
+    }
 }
