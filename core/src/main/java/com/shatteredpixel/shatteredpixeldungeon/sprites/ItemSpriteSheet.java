@@ -753,11 +753,14 @@ public class ItemSpriteSheet {
 	public static final int FLAMETHROWER 	   = GUN_TIER5+1;
 	public static final int PLASMACANNON       = GUN_TIER5+2;
 	public static final int ROCKETLAUNCHER     = GUN_TIER5+3;
+	public static final int MAGNUMPISTOL             = GUN_TIER5+4;
 	static{
 		assignItemRect(MACHINEGUN,  		 13, 15);
 		assignItemRect(FLAMETHROWER,  		 14, 15);
 		assignItemRect(PLASMACANNON,  		 14, 16);
-		assignItemRect(ROCKETLAUNCHER,       15, 15);
+		assignItemRect(ROCKETLAUNCHER,  	 15, 15);
+		assignItemRect(MAGNUMPISTOL,               12, 16);
+
 	}
 
 
