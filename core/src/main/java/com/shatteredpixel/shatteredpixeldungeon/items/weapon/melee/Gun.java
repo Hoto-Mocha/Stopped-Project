@@ -47,18 +47,18 @@ public abstract class Gun extends MeleeWeapon {
 
     @Override
     public int min(int lvl) {
-        return 1 * tier +    // base
-                lvl;         // level scaling
+        return 1 * (tier + 1) +      // base
+                lvl;                 // level scaling
     }
 
     @Override
     public int max(int lvl) {
-        return 3 * (tier + 1) +    // base
-                lvl;               // level scaling
+        return 3 * (tier + 1) +     // base
+                lvl * (tier + 1);   // level scaling
     }
 
     public int shootMin(int lvl) {
-        return 1 * (tier + 1) +     // base
+        return 2 * (tier + 1) +     // base
                 lvl;                // level scaling
     }
 
