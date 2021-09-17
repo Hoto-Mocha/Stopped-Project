@@ -691,7 +691,7 @@ public class ItemSpriteSheet {
 	}
 
 	private static final int ARPIXEL         =                                   xy(1, 32);  //16 slots
-	public static final int GUNSMITHINGBAG        = ARPIXEL+0;
+	public static final int GUNSMITHINGBAG   = ARPIXEL+0;
 	public static final int BULLET           = ARPIXEL+1;
 	public static final int NORMALSHOT       = ARPIXEL+2;
 	public static final int HPSHOT           = ARPIXEL+3;
@@ -699,7 +699,7 @@ public class ItemSpriteSheet {
 	public static final int APSHOT           = ARPIXEL+5;
 	public static final int ROCKETSHOT       = ARPIXEL+6;
 	static{
-		assignItemRect(GUNSMITHINGBAG,  			 16, 16);
+		assignItemRect(GUNSMITHINGBAG,  	 16, 16);
 		assignItemRect(BULLET,   			 14, 14);
 		assignItemRect(NORMALSHOT,           10, 10);
 		assignItemRect(HPSHOT,               10, 10);
