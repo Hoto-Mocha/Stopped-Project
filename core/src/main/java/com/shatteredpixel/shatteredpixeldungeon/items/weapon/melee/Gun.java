@@ -63,7 +63,7 @@ public abstract class Gun extends MeleeWeapon {
     }
 
     public int shootMax(int lvl) {
-        return 5 * (tier + 1) +     // base
+        return 4 * (tier + 1) +     // base
                 lvl * (tier + 1);   // level scaling
     }
 

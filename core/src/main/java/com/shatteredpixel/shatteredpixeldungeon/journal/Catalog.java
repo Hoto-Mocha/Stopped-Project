@@ -97,6 +97,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Crossbow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.CrudePistol;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dirk;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.DualPistol;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Flail;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gauntlet;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Glaive;
@@ -111,8 +112,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Longsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Mace;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MachineGun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagnumPistol;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Quarterstaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Revolver;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RocketLauncher;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RunicBlade;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
@@ -187,11 +190,14 @@ public enum Catalog {
 		WEAPONS.seen.put( Gauntlet.class,                   false);
 
 		WEAPONS.seen.put( CrudePistol.class,                true);
-		WEAPONS.seen.put( Handgun.class,                    true);
 		WEAPONS.seen.put( Revolver.class,                   true);
+		WEAPONS.seen.put( Handgun.class,                    true);
 		WEAPONS.seen.put( HuntingRifle.class,               true);
 		WEAPONS.seen.put( ShotGun.class,                    true);
+		WEAPONS.seen.put( DualPistol.class,                 true);
+		WEAPONS.seen.put( MagnumPistol.class,               true);
 		WEAPONS.seen.put( MachineGun.class,                 true);
+		WEAPONS.seen.put( RocketLauncher.class,             true);
 
 		ARMOR.seen.put( ClothArmor.class,                   false);
 		ARMOR.seen.put( LeatherArmor.class,                 false);

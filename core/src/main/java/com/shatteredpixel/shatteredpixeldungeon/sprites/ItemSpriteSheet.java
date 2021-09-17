@@ -691,7 +691,7 @@ public class ItemSpriteSheet {
 	}
 
 	private static final int ARPIXEL         =                                   xy(1, 32);  //16 slots
-	public static final int GUNSMITHINGBAG        = ARPIXEL+0;
+	public static final int GUNSMITHINGBAG   = ARPIXEL+0;
 	public static final int BULLET           = ARPIXEL+1;
 	public static final int NORMALSHOT       = ARPIXEL+2;
 	public static final int HPSHOT           = ARPIXEL+3;
@@ -699,7 +699,7 @@ public class ItemSpriteSheet {
 	public static final int APSHOT           = ARPIXEL+5;
 	public static final int ROCKETSHOT       = ARPIXEL+6;
 	static{
-		assignItemRect(GUNSMITHINGBAG,  			 16, 16);
+		assignItemRect(GUNSMITHINGBAG,  	 16, 16);
 		assignItemRect(BULLET,   			 14, 14);
 		assignItemRect(NORMALSHOT,           10, 10);
 		assignItemRect(HPSHOT,               10, 10);
@@ -717,13 +717,13 @@ public class ItemSpriteSheet {
 		}
 
 	private static final int GUN_TIER2         =                                   xy(9, 33);  //8 slots
-	public static final int HANDGUN            = GUN_TIER2+0;
-	public static final int BLUNDERBUSS        = GUN_TIER2+1;
-	public static final int REVOLVER           = GUN_TIER2+2;
+	public static final int REVOLVER           = GUN_TIER2+0;
+	public static final int HANDGUN            = GUN_TIER2+1;
+	public static final int BLUNDERBUSS        = GUN_TIER2+2;
 	static{
+		assignItemRect(REVOLVER,  			 11, 15);
 		assignItemRect(HANDGUN,  			 13, 16);
 		assignItemRect(BLUNDERBUSS,  		 13, 15);
-		assignItemRect(REVOLVER,  			 11, 15);
 	}
 
 	private static final int GUN_TIER3         =                                   xy(1, 34);  //8 slots
@@ -739,27 +739,27 @@ public class ItemSpriteSheet {
 	}
 
 	private static final int GUN_TIER4         =                                   xy(9, 34);  //8 slots
-	public static final int SNIPERRIFLE        = GUN_TIER4+0;
-	public static final int ASSULTRIFLE 	   = GUN_TIER4+1;
+	public static final int ASSULTRIFLE        = GUN_TIER4+0;
+	public static final int SNIPERRIFLE 	   = GUN_TIER4+1;
 	public static final int SUBMACHINEGUN      = GUN_TIER4+2;
 	static{
-		assignItemRect(SNIPERRIFLE,  		 14, 16);
 		assignItemRect(ASSULTRIFLE,			 15, 16);
+		assignItemRect(SNIPERRIFLE,  		 14, 16);
 		assignItemRect(SUBMACHINEGUN, 		 15, 16);
 	}
 
 	private static final int GUN_TIER5         =                                   xy(1, 35);  //8 slots
-	public static final int MACHINEGUN         = GUN_TIER5+0;
-	public static final int FLAMETHROWER 	   = GUN_TIER5+1;
-	public static final int PLASMACANNON       = GUN_TIER5+2;
-	public static final int ROCKETLAUNCHER     = GUN_TIER5+3;
-	public static final int MAGNUMPISTOL             = GUN_TIER5+4;
+	public static final int MAGNUMPISTOL       = GUN_TIER5+0;
+	public static final int MACHINEGUN 	       = GUN_TIER5+1;
+	public static final int ROCKETLAUNCHER     = GUN_TIER5+2;
+	public static final int FLAMETHROWER       = GUN_TIER5+3;
+	public static final int PLASMACANNON       = GUN_TIER5+4;
 	static{
+		assignItemRect(MAGNUMPISTOL,         12, 16);
 		assignItemRect(MACHINEGUN,  		 13, 15);
+		assignItemRect(ROCKETLAUNCHER,  	 15, 15);
 		assignItemRect(FLAMETHROWER,  		 14, 15);
 		assignItemRect(PLASMACANNON,  		 14, 16);
-		assignItemRect(ROCKETLAUNCHER,  	 15, 15);
-		assignItemRect(MAGNUMPISTOL,               12, 16);
 
 	}
 
