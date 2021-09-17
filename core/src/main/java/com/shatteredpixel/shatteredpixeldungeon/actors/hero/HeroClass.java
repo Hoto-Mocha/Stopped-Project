@@ -345,7 +345,7 @@ public enum HeroClass {
 			case HUNTRESS:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
 			case GUNNER:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_GUNNER);		//TODO: 뱃지 이미지 추가 필요
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_GUNNER);
 		}
 	}
 	
