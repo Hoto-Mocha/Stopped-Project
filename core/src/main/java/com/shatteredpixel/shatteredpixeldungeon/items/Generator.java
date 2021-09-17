@@ -111,10 +111,12 @@ import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfRegrowth;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfTransfusion;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfWarding;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.AssassinsBlade;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.AssultRifle;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.BattleAxe;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Crossbow;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dirk;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.DualPistol;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Flail;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gauntlet;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Glaive;
@@ -126,8 +128,10 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.HandAxe;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Longsword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Mace;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagnumPistol;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Quarterstaff;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RocketLauncher;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RoundShield;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.RunicBlade;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Sai;
@@ -398,26 +402,30 @@ public class Generator {
 			GUN_T1.probs = new float[]{ 0 };
 
 			GUN_T2.classes = new Class<?>[]{
-					Handgun.class,
-					Revolver.class
+					Revolver.class,
+					Handgun.class
 			};
 			GUN_T2.probs = new float[]{ 6, 5 };
 
 			GUN_T3.classes = new Class<?>[]{
 					HuntingRifle.class,
-					ShotGun.class
+					ShotGun.class,
+					DualPistol.class
 			};
-			GUN_T3.probs = new float[]{ 6, 5 };
+			GUN_T3.probs = new float[]{ 6, 5, 4 };
 
 			GUN_T4.classes = new Class<?>[]{
+					AssultRifle.class,
 					SniperRifle.class
 			};
-			GUN_T4.probs = new float[]{ 6 };
+			GUN_T4.probs = new float[]{ 6, 5 };
 
 			GUN_T5.classes = new Class<?>[]{
-					MachineGun.class
+					MagnumPistol.class,
+					MachineGun.class,
+					RocketLauncher.class
 			};
-			GUN_T5.probs = new float[]{ 6 };
+			GUN_T5.probs = new float[]{ 6, 5, 4 };
 
 			//see Generator.randomArmor
 			ARMOR.classes = new Class<?>[]{
