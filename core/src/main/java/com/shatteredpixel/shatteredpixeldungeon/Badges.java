@@ -57,7 +57,7 @@ public class Badges {
 		UNLOCK_MAGE                 ( 1 ),
 		UNLOCK_ROGUE                ( 2 ),
 		UNLOCK_HUNTRESS             ( 3 ),
-		UNLOCK_GUNNER				( 19 ),		//TODO: 뱃지 이미지 추가 필요
+		UNLOCK_GUNNER				( 19 ),
 		MONSTERS_SLAIN_1            ( 4 ),
 		MONSTERS_SLAIN_2            ( 5 ),
 		GOLD_COLLECTED_1            ( 6 ),
