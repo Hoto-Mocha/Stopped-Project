@@ -360,7 +360,7 @@ public enum HeroClass {
 			case HUNTRESS:
 				return Messages.get(HeroClass.class, "huntress_unlock");
 			case GUNNER:
-				return Messages.get(HeroClass.class, "gunner_unlock");		//TODO: 언락 메시지 추가 필요
+				return Messages.get(HeroClass.class, "gunner_unlock");
 		}
 	}
 
