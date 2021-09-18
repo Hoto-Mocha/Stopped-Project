@@ -53,6 +53,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.rings.Ring;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.Weapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gun;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
@@ -289,6 +290,9 @@ public enum Talent {
 		if (talent == HEIGHTENED_SENSES || talent == FARSIGHT){
 			Dungeon.observe();
 		}
+		if (talent == GUNSLINGERS_INTUITION && hero.pointsInTalent(GUNSLINGERS_INTUITION) == 2){
+			if (hero.belongings.weapon() != null && hero.belongings.weapon() instanceof Gun) hero.belongings.weapon().identify();
+		}
 	}
 
 	public static class CachedRationsDropped extends CounterBuff{{revivePersists = true;}};
@@ -330,6 +334,9 @@ public enum Talent {
 			//effectively 1/2 turns of haste
 			Buff.prolong( hero, Haste.class, 0.67f+hero.pointsInTalent(INVIGORATING_MEAL));
 		}
+
+		//TODO: RELOADING_MEAL 특성 효과 추가
+
 	}
 
 	public static class WarriorFoodImmunity extends FlavourBuff{
@@ -351,6 +358,9 @@ public enum Talent {
 		// 2x/instant for rogue (see onItemEqupped), also id's type on equip/on pickup
 		if (item instanceof Ring){
 			factor *= 1f + hero.pointsInTalent(THIEFS_INTUITION);
+		}
+		if (item instanceof Gun){
+			factor *= 1f + hero.pointsInTalent(GUNSLINGERS_INTUITION);
 		}
 		return factor;
 	}
@@ -417,6 +427,9 @@ public enum Talent {
 				SpellSprite.show( hero, SpellSprite.CHARGE );
 			}
 		}
+
+		//TODO: ARM_ENHANCE 특성 효과 추가
+
 	}
 
 	public static void onArtifactUsed( Hero hero ){
@@ -435,6 +448,9 @@ public enum Talent {
 			} else {
 				((Ring) item).setKnown();
 			}
+		}
+		if (hero.pointsInTalent(GUNSLINGERS_INTUITION) == 2 && (item instanceof Gun)){
+			item.identify();
 		}
 	}
 
@@ -478,6 +494,8 @@ public enum Talent {
 				enemy.buff(FollowupStrikeTracker.class).detach();
 			}
 		}
+		
+		//TODO: SHOOT_THE_HEART 특성 효과 추가
 
 		return dmg;
 	}
@@ -512,6 +530,9 @@ public enum Talent {
 			case HUNTRESS:
 				Collections.addAll(tierTalents, NATURES_BOUNTY, SURVIVALISTS_INTUITION, FOLLOWUP_STRIKE, NATURES_AID);
 				break;
+			case GUNNER:
+				Collections.addAll(tierTalents, IN_THE_GUNFIRE, GUNSLINGERS_INTUITION, SHOOT_THE_HEART, SAFE_RELOAD);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(0).put(talent, 0);
@@ -532,6 +553,9 @@ public enum Talent {
 			case HUNTRESS:
 				Collections.addAll(tierTalents, INVIGORATING_MEAL, RESTORED_NATURE, REJUVENATING_STEPS, HEIGHTENED_SENSES, DURABLE_PROJECTILES);
 				break;
+			case GUNNER:
+				Collections.addAll(tierTalents, RELOADING_MEAL, ARM_ENHANCE, OBSCURATOON, VULNERABLE_BULLET, PEEKING);
+				break;
 		}
 		for (Talent talent : tierTalents){
 			talents.get(1).put(talent, 0);
@@ -551,6 +575,9 @@ public enum Talent {
 				break;
 			case HUNTRESS:
 				Collections.addAll(tierTalents, POINT_BLANK, SEER_SHOT);
+				break;
+			case GUNNER:
+				Collections.addAll(tierTalents, MARTIALARTS, STREET_FIGHTING);
 				break;
 		}
 		for (Talent talent : tierTalents){
@@ -600,6 +627,12 @@ public enum Talent {
 				break;
 			case WARDEN:
 				Collections.addAll(tierTalents, DURABLE_TIPS, BARKSKIN, SHIELDING_DEW);
+				break;
+			case DESPERADO:
+				Collections.addAll(tierTalents, EXCELLENT_DEXTERITY, RUN_AND_GUN, GUN_RIOT);
+				break;
+			case SWAT:
+				Collections.addAll(tierTalents, FLASH_BANG, SILENCER, SLIDING);
 				break;
 		}
 		for (Talent talent : tierTalents){
