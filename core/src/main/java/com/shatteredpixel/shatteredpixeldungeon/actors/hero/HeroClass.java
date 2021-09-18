@@ -282,7 +282,7 @@ public enum HeroClass {
 			case HUNTRESS:
 				return Assets.Splashes.HUNTRESS;
 			case GUNNER:
-				return Assets.Splashes.GUNNER;    //TODO: 스플래시 아트 수정 필요
+				return Assets.Splashes.GUNNER;
 		}
 	}
 	
