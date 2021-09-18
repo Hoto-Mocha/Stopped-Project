@@ -251,8 +251,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new SmokeBomb(), new DeathMark(), new ShadowClone()};
 			case HUNTRESS:
 				return new ArmorAbility[]{new SpectralBlades(), new NaturesPower(), new SpiritHawk()};
-			case GUNNER:
-				return new ArmorAbility[]{new Buckshot(), new AntimaterRifle(), new GrenadeLauncher()};  //TODO: 각 능력 효과 추가
+			//case GUNNER:
+			//	return new ArmorAbility[]{new Buckshot(), new AntimaterRifle(), new GrenadeLauncher()};  //TODO: 각 능력 효과 추가
 		}
 	}
 
@@ -322,11 +322,11 @@ public enum HeroClass {
 				};
 			case GUNNER:
 				return new String[]{
-						Messages.get(HeroClass.class, "gunner_perk1"),		//TODO: 특성 문장 추가 필요
-						Messages.get(HeroClass.class, "gunner_perk2"),		//TODO: 특성 문장 추가 필요
-						Messages.get(HeroClass.class, "gunner_perk3"),		//TODO: 특성 문장 추가 필요
-						Messages.get(HeroClass.class, "gunner_perk4"),		//TODO: 특성 문장 추가 필요
-						Messages.get(HeroClass.class, "gunner_perk5"),		//TODO: 특성 문장 추가 필요
+						Messages.get(HeroClass.class, "gunner_perk1"),
+						Messages.get(HeroClass.class, "gunner_perk2"),
+						Messages.get(HeroClass.class, "gunner_perk3"),
+						Messages.get(HeroClass.class, "gunner_perk4"),
+						Messages.get(HeroClass.class, "gunner_perk5"),
 				};
 		}
 	}
