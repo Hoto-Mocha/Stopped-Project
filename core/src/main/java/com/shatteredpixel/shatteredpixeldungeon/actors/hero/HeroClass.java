@@ -27,6 +27,9 @@ import com.shatteredpixel.shatteredpixeldungeon.Challenges;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.QuickSlot;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.ArmorAbility;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.gunner.AntimaterRifle;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.gunner.Buckshot;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.gunner.GrenadeLauncher;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.NaturesPower;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpiritHawk;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.huntress.SpectralBlades;
@@ -40,12 +43,15 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.He
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Shockwave;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.warrior.Endure;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
+import com.shatteredpixel.shatteredpixeldungeon.items.Bullet;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.Waterskin;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClothArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.VelvetPouch;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
+import com.shatteredpixel.shatteredpixeldungeon.items.food.SmallRation;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHaste;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfHealing;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfInvisibility;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfLiquidFlame;
@@ -54,9 +60,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.CrudePistol;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Dagger;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MagesStaff;
@@ -71,7 +79,8 @@ public enum HeroClass {
 	WARRIOR( HeroSubClass.BERSERKER, HeroSubClass.GLADIATOR ),
 	MAGE( HeroSubClass.BATTLEMAGE, HeroSubClass.WARLOCK ),
 	ROGUE( HeroSubClass.ASSASSIN, HeroSubClass.FREERUNNER ),
-	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN );
+	HUNTRESS( HeroSubClass.SNIPER, HeroSubClass.WARDEN ),
+	GUNNER( HeroSubClass.DESPERADO, HeroSubClass.SWAT );
 
 	private HeroSubClass[] subClasses;
 
@@ -114,6 +123,9 @@ public enum HeroClass {
 			case HUNTRESS:
 				initHuntress( hero );
 				break;
+			case GUNNER:
+				initGunner( hero );
+				break;
 		}
 
 		for (int s = 0; s < QuickSlot.SIZE; s++){
@@ -135,6 +147,8 @@ public enum HeroClass {
 				return Badges.Badge.MASTERY_ROGUE;
 			case HUNTRESS:
 				return Badges.Badge.MASTERY_HUNTRESS;
+			case GUNNER:
+				return Badges.Badge.MASTERY_GUNNER;
 		}
 		return null;
 	}
@@ -196,6 +210,25 @@ public enum HeroClass {
 		new ScrollOfLullaby().identify();
 	}
 
+	private static void initGunner( Hero hero ) {
+		CrudePistol crude;
+
+		crude = new CrudePistol();
+
+		(hero.belongings.weapon = new CrudePistol()).identify();
+		hero.belongings.weapon.activate(hero);
+
+		Bullet bullets = new Bullet();
+		bullets.quantity(30).collect();
+
+		Dungeon.quickslot.setSlot(0, crude);
+
+		//TODO:특수탄 제조 가방 유물 추가 시 기본 무장으로 해당 유물 추가
+
+		new PotionOfHaste().identify();
+		new ScrollOfTeleportation().identify();
+	}
+
 	public String title() {
 		return Messages.get(HeroClass.class, name());
 	}
@@ -218,6 +251,8 @@ public enum HeroClass {
 				return new ArmorAbility[]{new SmokeBomb(), new DeathMark(), new ShadowClone()};
 			case HUNTRESS:
 				return new ArmorAbility[]{new SpectralBlades(), new NaturesPower(), new SpiritHawk()};
+			//case GUNNER:
+			//	return new ArmorAbility[]{new Buckshot(), new AntimaterRifle(), new GrenadeLauncher()};  //TODO: 각 능력 효과 추가
 		}
 	}
 
@@ -231,6 +266,8 @@ public enum HeroClass {
 				return Assets.Sprites.ROGUE;
 			case HUNTRESS:
 				return Assets.Sprites.HUNTRESS;
+			case GUNNER:
+				return Assets.Sprites.GUNNER;
 		}
 	}
 
@@ -244,6 +281,8 @@ public enum HeroClass {
 				return Assets.Splashes.ROGUE;
 			case HUNTRESS:
 				return Assets.Splashes.HUNTRESS;
+			case GUNNER:
+				return Assets.Splashes.GUNNER;
 		}
 	}
 	
@@ -281,6 +320,14 @@ public enum HeroClass {
 						Messages.get(HeroClass.class, "huntress_perk4"),
 						Messages.get(HeroClass.class, "huntress_perk5"),
 				};
+			case GUNNER:
+				return new String[]{
+						Messages.get(HeroClass.class, "gunner_perk1"),
+						Messages.get(HeroClass.class, "gunner_perk2"),
+						Messages.get(HeroClass.class, "gunner_perk3"),
+						Messages.get(HeroClass.class, "gunner_perk4"),
+						Messages.get(HeroClass.class, "gunner_perk5"),
+				};
 		}
 	}
 	
@@ -297,6 +344,8 @@ public enum HeroClass {
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);
 			case HUNTRESS:
 				return Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
+			case GUNNER:
+				return Badges.isUnlocked(Badges.Badge.UNLOCK_GUNNER);
 		}
 	}
 	
@@ -310,6 +359,8 @@ public enum HeroClass {
 				return Messages.get(HeroClass.class, "rogue_unlock");
 			case HUNTRESS:
 				return Messages.get(HeroClass.class, "huntress_unlock");
+			case GUNNER:
+				return Messages.get(HeroClass.class, "gunner_unlock");
 		}
 	}
 

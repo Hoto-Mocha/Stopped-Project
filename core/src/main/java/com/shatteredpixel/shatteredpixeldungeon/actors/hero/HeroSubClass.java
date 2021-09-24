@@ -28,6 +28,8 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.ui.HeroIcon;
 import com.watabou.noosa.Game;
 
+import javax.crypto.spec.DESedeKeySpec;
+
 public enum HeroSubClass {
 
 	NONE(HeroIcon.NONE),
@@ -42,7 +44,10 @@ public enum HeroSubClass {
 	FREERUNNER(HeroIcon.FREERUNNER),
 	
 	SNIPER(HeroIcon.SNIPER),
-	WARDEN(HeroIcon.WARDEN);
+	WARDEN(HeroIcon.WARDEN),
+
+	DESPERADO(HeroIcon.DESPERADO),
+	SWAT(HeroIcon.SWAT);
 
 	int icon;
 

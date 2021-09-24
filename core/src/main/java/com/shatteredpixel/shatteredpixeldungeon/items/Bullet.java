@@ -5,6 +5,9 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 public class Bullet extends Item {
     {
         image = ItemSpriteSheet.BULLET;
+
+        stackable = true;
+
         bones = true;
     }
 
